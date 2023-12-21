@@ -1,16 +1,43 @@
 package com.jolly.astra.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.security.oauth2.jwt.JwtClaimNames;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author jolly
  */
-@ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "astra", ignoreUnknownFields = false)
 public class ApplicationProperties {
   private final Logging logging = new Logging();
+  private final List<Issuer> issuers = new ArrayList<>();
 
   public Logging getLogging() {
     return logging;
+  }
+
+  public List<Issuer> getIssuers() {
+    return issuers;
+  }
+
+  public Issuer get(URL issuerUri) throws MisconfigurationException {
+    final List<Issuer> issuerProperties = this.issuers.stream()
+      .filter(iss -> Objects.equals(issuerUri, iss.getUri()))
+      .toList();
+
+    if (issuerProperties.isEmpty()) {
+      throw new MisconfigurationException("missing authorities mapping properties for %s".formatted(issuerUri.toString()));
+    }
+
+    if (issuerProperties.size() > 1) {
+      throw new MisconfigurationException("too many authorities mapping properties for %s".formatted(issuerUri.toString()));
+    }
+
+    return issuerProperties.get(0);
   }
 
   public static class Logging {
@@ -69,6 +96,70 @@ public class ApplicationProperties {
 
       public void setRingBufferSize(int ringBufferSize) {
         this.ringBufferSize = ringBufferSize;
+      }
+    }
+  }
+
+  public static class Issuer {
+    private URL uri;
+    private final List<Claim> claims = new ArrayList<>();
+    private String usernameJsonPath = JwtClaimNames.SUB;
+
+    public Issuer() {}
+
+    public URL getUri() {
+      return uri;
+    }
+
+    public void setUri(URL uri) {
+      this.uri = uri;
+    }
+
+    public List<Claim> getClaims() {
+      return claims;
+    }
+
+    public String getUsernameJsonPath() {
+      return usernameJsonPath;
+    }
+
+    public void setUsernameJsonPath(String usernameJsonPath) {
+      this.usernameJsonPath = usernameJsonPath;
+    }
+
+    public static class Claim {
+      private String jsonPath;
+      private CaseProcessing caseProcessing = CaseProcessing.UNCHANGED;
+      private String prefix = "";
+
+      public Claim() {}
+
+      public enum CaseProcessing {
+        UNCHANGED, TO_LOWER, TO_UPPER
+      }
+
+      public String getJsonPath() {
+        return jsonPath;
+      }
+
+      public void setJsonPath(String jsonPath) {
+        this.jsonPath = jsonPath;
+      }
+
+      public CaseProcessing getCaseProcessing() {
+        return caseProcessing;
+      }
+
+      public void setCaseProcessing(CaseProcessing caseProcessing) {
+        this.caseProcessing = caseProcessing;
+      }
+
+      public String getPrefix() {
+        return prefix;
+      }
+
+      public void setPrefix(String prefix) {
+        this.prefix = prefix;
       }
     }
   }
