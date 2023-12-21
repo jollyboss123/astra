@@ -14,7 +14,7 @@ public class GreetingController {
 	}
 
 	@GetMapping("/restricted")
-	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyAuthority(T(com.jolly.astra.security.AuthoritiesConstants).ADMIN)")
 	public MessageDto getRestricted() {
 		return new MessageDto("You are an admin!");
 	}

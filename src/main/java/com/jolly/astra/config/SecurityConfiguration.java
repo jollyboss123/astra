@@ -85,8 +85,8 @@ public class SecurityConfiguration {
     ApplicationProperties props,
     JwtAuthenticationConverter authenticationConverter
   ) {
-    final Map<String, AuthenticationManager> authenticationProviders = props.getIssuers().stream()
-      .map(ApplicationProperties.Issuer::getUri)
+    final Map<String, AuthenticationManager> authenticationProviders = props.getSecurity().getIssuers().stream()
+      .map(ApplicationProperties.Security.Issuer::getUri)
       .map(URL::toString)
       .collect(Collectors.toMap(issuer -> issuer, issuer -> authenticationProvider(issuer, authenticationConverter)::authenticate));
 

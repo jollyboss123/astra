@@ -14,18 +14,18 @@ import java.util.Objects;
 @ConfigurationProperties(prefix = "astra", ignoreUnknownFields = false)
 public class ApplicationProperties {
   private final Logging logging = new Logging();
-  private final List<Issuer> issuers = new ArrayList<>();
+  private final Security security = new Security();
 
   public Logging getLogging() {
     return logging;
   }
 
-  public List<Issuer> getIssuers() {
-    return issuers;
+  public Security getSecurity() {
+    return security;
   }
 
-  public Issuer get(URL issuerUri) throws MisconfigurationException {
-    final List<Issuer> issuerProperties = this.issuers.stream()
+  public Security.Issuer get(URL issuerUri) throws MisconfigurationException {
+    final List<Security.Issuer> issuerProperties = this.security.getIssuers().stream()
       .filter(iss -> Objects.equals(issuerUri, iss.getUri()))
       .toList();
 
@@ -100,66 +100,76 @@ public class ApplicationProperties {
     }
   }
 
-  public static class Issuer {
-    private URL uri;
-    private final List<Claim> claims = new ArrayList<>();
-    private String usernameJsonPath = JwtClaimNames.SUB;
+  public static class Security {
+    private final List<Issuer> issuers = new ArrayList<>();
 
-    public Issuer() {}
+    public Security() {}
 
-    public URL getUri() {
-      return uri;
+    public List<Issuer> getIssuers() {
+      return issuers;
     }
 
-    public void setUri(URL uri) {
-      this.uri = uri;
-    }
+    public static class Issuer {
+      private URL uri;
+      private final List<Claim> claims = new ArrayList<>();
+      private String usernameJsonPath = JwtClaimNames.SUB;
 
-    public List<Claim> getClaims() {
-      return claims;
-    }
+      public Issuer() {}
 
-    public String getUsernameJsonPath() {
-      return usernameJsonPath;
-    }
-
-    public void setUsernameJsonPath(String usernameJsonPath) {
-      this.usernameJsonPath = usernameJsonPath;
-    }
-
-    public static class Claim {
-      private String jsonPath;
-      private CaseProcessing caseProcessing = CaseProcessing.UNCHANGED;
-      private String prefix = "";
-
-      public Claim() {}
-
-      public enum CaseProcessing {
-        UNCHANGED, TO_LOWER, TO_UPPER
+      public URL getUri() {
+        return uri;
       }
 
-      public String getJsonPath() {
-        return jsonPath;
+      public void setUri(URL uri) {
+        this.uri = uri;
       }
 
-      public void setJsonPath(String jsonPath) {
-        this.jsonPath = jsonPath;
+      public List<Claim> getClaims() {
+        return claims;
       }
 
-      public CaseProcessing getCaseProcessing() {
-        return caseProcessing;
+      public String getUsernameJsonPath() {
+        return usernameJsonPath;
       }
 
-      public void setCaseProcessing(CaseProcessing caseProcessing) {
-        this.caseProcessing = caseProcessing;
+      public void setUsernameJsonPath(String usernameJsonPath) {
+        this.usernameJsonPath = usernameJsonPath;
       }
 
-      public String getPrefix() {
-        return prefix;
-      }
+      public static class Claim {
+        private String jsonPath;
+        private CaseProcessing caseProcessing = CaseProcessing.UNCHANGED;
+        private String prefix = "";
 
-      public void setPrefix(String prefix) {
-        this.prefix = prefix;
+        public Claim() {}
+
+        public enum CaseProcessing {
+          UNCHANGED, TO_LOWER, TO_UPPER
+        }
+
+        public String getJsonPath() {
+          return jsonPath;
+        }
+
+        public void setJsonPath(String jsonPath) {
+          this.jsonPath = jsonPath;
+        }
+
+        public CaseProcessing getCaseProcessing() {
+          return caseProcessing;
+        }
+
+        public void setCaseProcessing(CaseProcessing caseProcessing) {
+          this.caseProcessing = caseProcessing;
+        }
+
+        public String getPrefix() {
+          return prefix;
+        }
+
+        public void setPrefix(String prefix) {
+          this.prefix = prefix;
+        }
       }
     }
   }

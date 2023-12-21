@@ -17,9 +17,9 @@ import java.util.stream.Stream;
  * @author jolly
  */
 public class JwtGrantedAuthoritiesConverter implements Converter<Jwt, Collection<? extends GrantedAuthority>> {
-  private final ApplicationProperties.Issuer props;
+  private final ApplicationProperties.Security.Issuer props;
 
-  public JwtGrantedAuthoritiesConverter(ApplicationProperties.Issuer props) {
+  public JwtGrantedAuthoritiesConverter(ApplicationProperties.Security.Issuer props) {
     this.props = props;
   }
 

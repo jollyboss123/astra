@@ -23,7 +23,7 @@ public class JwtAuthenticationConverter implements Converter<Jwt, JwtAuthenticat
 
   @Override
   public JwtAuthenticationToken convert(Jwt jwt) {
-    final ApplicationProperties.Issuer issuerProps = props.get(jwt.getIssuer());
+    final ApplicationProperties.Security.Issuer issuerProps = props.get(jwt.getIssuer());
     final Collection<? extends GrantedAuthority> authorities = new JwtGrantedAuthoritiesConverter(issuerProps).convert(jwt);
     final String username = JsonPath.read(jwt.getClaims(), issuerProps.getUsernameJsonPath());
     return new JwtAuthenticationToken(jwt, authorities, username);
