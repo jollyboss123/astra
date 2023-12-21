@@ -14,7 +14,7 @@ public class GreetingController {
 	}
 
 	@GetMapping("/restricted")
-	@PreAuthorize("hasAnyAuthority('ADMIN')")
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 	public MessageDto getRestricted() {
 		return new MessageDto("You are an admin!");
 	}
