@@ -1,0 +1,30 @@
+name: astra app ci
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+jobs:
+  security:
+    name: astra vulnerabilities
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]')"
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: run snyk to check for vulnerabilities
+        uses: snyk/actions/maven-3-jdk-20@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --sarif-file-output=snyk.sarif --severity-threshold=high
+
+      - name: upload result to github code scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
