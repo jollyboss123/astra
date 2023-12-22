@@ -1,5 +1,5 @@
 name: astra app ci
-on: [pull_request]
+on: [push, pull_request]
 jobs:
   security:
     name: astra vulnerabilities
