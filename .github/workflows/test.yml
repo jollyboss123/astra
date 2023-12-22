@@ -1,4 +1,4 @@
-name: application ci
+name: test
 on: [push, pull_request]
 jobs:
   test:
@@ -16,7 +16,16 @@ jobs:
           distribution: 'temurin'
           java-version: 21
 
+      - uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: make maven wrapper executable
+        if: contains(matrix.os, 'win') == false
+        run: chmod +x ./mvnw
+
       - name: run all test
-        run: |
-          chmod +x mvnw
-          make test-all
+        run: make test-all
