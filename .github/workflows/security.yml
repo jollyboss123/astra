@@ -26,6 +26,6 @@ jobs:
           args: --severity-threshold=high
 
       - name: upload result to github code scanning
-        uses: github/codeql-action/upload-sarif@v1
+        uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: snyk.sarif
