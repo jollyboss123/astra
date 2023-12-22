@@ -1,0 +1,22 @@
+name: application ci
+on: [push, pull_request]
+jobs:
+  test:
+    name: astra tests
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[ci skip]') 
+        && !contains(github.event.head_commit.message, '[skip ci]') 
+        && !contains(github.event.pull_request.title, '[ci skip]')"
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 21
+
+      - name: run all test
+        run: |
+          chmod +x mvnw
+          make test-all
