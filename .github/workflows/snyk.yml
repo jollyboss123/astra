@@ -1,9 +1,8 @@
 name: snyk security
 on:
-  push:
+  pull_request:
     branches:
       - main
-  pull_request:
 jobs:
   security:
     name: astra vulnerabilities
