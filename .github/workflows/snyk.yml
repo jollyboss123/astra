@@ -1,4 +1,4 @@
-name: astra app ci
+name: snyk security
 on:
   push:
     branches:
