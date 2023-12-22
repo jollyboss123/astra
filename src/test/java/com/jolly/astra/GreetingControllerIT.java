@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -55,5 +56,20 @@ class GreetingControllerIT {
         new SimpleGrantedAuthority("ROLE_USER")
       ))
     ).andExpect(status().isForbidden());
+  }
+
+  @Test
+  @WithMockAuthentication("ROLE_ADMIN")
+  void userAuthorized_withAnnotation() throws Exception {
+    api.perform(get("/restricted"))
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$.body").value("You are an admin!"));
+  }
+
+  @Test
+  @WithAnonymousUser
+  void userNotAuthorized_withAnnotation() throws Exception {
+    api.perform(get("/restricted"))
+      .andExpect(status().isUnauthorized());
   }
 }

@@ -24,6 +24,7 @@ public class JwtGrantedAuthoritiesConverter implements Converter<Jwt, Collection
   }
 
   @Override
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public Collection<? extends GrantedAuthority> convert(@NonNull Jwt jwt) {
     return props.getClaims().stream()
       .flatMap(claimProps -> {
