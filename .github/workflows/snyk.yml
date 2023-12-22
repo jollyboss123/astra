@@ -1,66 +1,30 @@
-name: snyk security
-
+name: astra app ci
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
   pull_request:
-    branches: ["main"]
-
-permissions:
-  contents: read
-
 jobs:
-  snyk:
+  security:
     name: astra vulnerabilities
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       security-events: write
-      actions: read
-    runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]')"
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Snyk CLI to check for security issues
-        # Snyk can be used to break the build when it detects security issues.
-        # In this case we want to upload the SAST issues to GitHub Code Scanning
-        uses: snyk/actions/setup@806182742461562b67788a64410098c9d9b96adb
 
+      - name: run snyk to check for vulnerabilities
+        uses: snyk/actions/maven-3-jdk-20@master
+        continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --sarif-file-output=snyk.sarif --severity-threshold=high
 
-        # Runs Snyk Code (SAST) analysis and uploads result into GitHub.
-      - name: Snyk Code test
-        continue-on-error: true
-        run: snyk code test --sarif > snyk-code.sarif
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-        # Runs Snyk Open Source (SCA) analysis and uploads result to Snyk.
-      - name: Snyk Open Source monitor
-        continue-on-error: true
-        run: snyk monitor --all-projects
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-        # Runs Snyk Infrastructure as Code (IaC) analysis and uploads result to Snyk.
-      - name: Snyk IaC test and report
-        continue-on-error: true
-        run: snyk iac test --report
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-        # Build the docker image for testing
-#      - name: Build a Docker image
-#        run: docker build -t your/image-to-test .
-#        # Runs Snyk Container (Container and SCA) analysis and uploads result to Snyk.
-#      - name: Snyk Container monitor
-#        run: snyk container monitor your/image-to-test --file=Dockerfile
-
-        # Push the Snyk Code results into GitHub Code Scanning tab
-      - name: Upload result to GitHub Code Scanning
-        continue-on-error: true
+      - name: upload result to github code scanning
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: snyk-code.sarif
-
+          sarif_file: snyk.sarif
