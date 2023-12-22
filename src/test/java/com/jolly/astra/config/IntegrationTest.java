@@ -17,8 +17,7 @@ import java.lang.annotation.Target;
 @SpringBootTest(
   webEnvironment = SpringBootTest.WebEnvironment.MOCK,
   classes = {
-    AstraApp.class,
-    SecurityConfiguration.class
+    AstraApp.class
   },
   properties = {
     "server.ssl.enabled=false"
