@@ -35,4 +35,4 @@ integration-test:
 	./mvnw -ntp verify --batch-mode -Dlogging.level.ROOT=OFF -Dlogging.level.com.jolly.astra=OFF -Dlogging.level.org.springframework=OFF -Dlogging.level.org.springframework.web=OFF -Dlogging.level.org.springframework.security=OFF
 
 .PHONY: test-all
-test-all: info doc checkstyle unit-test
+test-all: info doc checkstyle integration-test

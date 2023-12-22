@@ -1,6 +1,6 @@
-package com.jolly.astra;
+package com.jolly.astra.config;
 
-import com.jolly.astra.config.SecurityConfiguration;
+import com.jolly.astra.AstraApp;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -24,6 +24,7 @@ import java.lang.annotation.Target;
     "server.ssl.enabled=false"
   }
 )
+@EmbeddedSQL
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public @interface IntegrationTest {
 }

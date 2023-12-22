@@ -370,11 +370,11 @@
                     <configuration>
                         <rules>
                             <requireMavenVersion>
-                                <message>You are running an older version of Maven. JHipster requires at least Maven ${maven.version}</message>
+                                <message>You are running an older version of Maven. Astra requires at least Maven ${maven.version}</message>
                                 <version>[${maven.version},)</version>
                             </requireMavenVersion>
                             <requireJavaVersion>
-                                <message>You are running an incompatible version of Java. JHipster supports JDK 17 to 21.</message>
+                                <message>You are running an incompatible version of Java. Astra supports JDK 17 to 21.</message>
                                 <version>[17,18),[18,19),[19,20),[20,21),[21,22)</version>
                             </requireJavaVersion>
                         </rules>
