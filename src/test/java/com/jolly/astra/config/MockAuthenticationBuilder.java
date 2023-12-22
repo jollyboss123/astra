@@ -1,6 +1,5 @@
-package com.jolly.astra;
+package com.jolly.astra.config;
 
-import org.mockito.Mockito;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

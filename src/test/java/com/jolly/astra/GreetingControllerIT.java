@@ -1,8 +1,13 @@
 package com.jolly.astra;
 
+import com.jolly.astra.config.IntegrationTest;
+import com.jolly.astra.config.WithMockAuthentication;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.AuthenticationManagerResolver;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
@@ -18,6 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 @AutoConfigureMockMvc
 class GreetingControllerIT {
+  @MockBean
+  private AuthenticationManagerResolver<HttpServletRequest> authenticationManagerResolver;
   @Autowired
   private MockMvc api;
 

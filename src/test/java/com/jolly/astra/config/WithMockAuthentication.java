@@ -1,4 +1,4 @@
-package com.jolly.astra;
+package com.jolly.astra.config;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.security.core.Authentication;
