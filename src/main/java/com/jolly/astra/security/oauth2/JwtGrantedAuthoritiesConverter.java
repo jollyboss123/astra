@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 /**
@@ -64,7 +65,8 @@ public class JwtGrantedAuthoritiesConverter implements Converter<Jwt, Collection
         }
 
         return Stream.empty();
-      }).map(SimpleGrantedAuthority::new)
+      }).filter(claim -> claim.toUpperCase(Locale.ROOT).startsWith("ROLE_"))
+      .map(SimpleGrantedAuthority::new)
       .map(GrantedAuthority.class::cast)
       .toList();
   }
