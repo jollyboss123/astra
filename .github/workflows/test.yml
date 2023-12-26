@@ -30,5 +30,8 @@ jobs:
         if: contains(matrix.os, 'win') == false
         run: chmod +x ./mvnw
 
+      - name: build with Maven
+        run: ./mvnw clean install
+
       - name: run all test
         run: make test-all
