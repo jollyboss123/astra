@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
-    <artifactId>norns</artifactId>
+    <artifactId>app</artifactId>
 
     <url>https://github.com/jollyboss123/astra/</url>
 
