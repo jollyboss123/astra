@@ -27,10 +27,6 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
         <dependency>
@@ -118,12 +114,73 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <mainClass>${start-class}</mainClass>
+                        <!--
+                        Enable the line below to have remote debugging of your application on port 5005
+                        <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
+                        -->
+                        <classifier>exec</classifier>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib-maven-plugin.version}</version>
+                    <configuration>
+                        <from>
+                            <image>${jib-maven-plugin.image}</image>
+                            <platforms>
+                                <platform>
+                                    <architecture>${jib-maven-plugin.architecture}</architecture>
+                                    <os>linux</os>
+                                </platform>
+                            </platforms>
+                        </from>
+                        <to>
+                            <image>astra:latest</image>
+                        </to>
+                        <container>
+                            <entrypoint>
+                                <shell>bash</shell>
+                                <option>-c</option>
+                                <arg>/entrypoint.sh</arg>
+                            </entrypoint>
+                            <ports>
+                                <port>8080</port>
+                            </ports>
+                            <environment>
+                                <SPRING_OUTPUT_ANSI_ENABLED>ALWAYS</SPRING_OUTPUT_ANSI_ENABLED>
+                                <ASTRA_SLEEP>0</ASTRA_SLEEP>
+                            </environment>
+                            <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                            <user>1000</user>
+                        </container>
+                        <extraDirectories>
+                            <paths>src/main/docker/jib</paths>
+                            <permissions>
+                                <permission>
+                                    <file>/entrypoint.sh</file>
+                                    <mode>755</mode>
+                                </permission>
+                            </permissions>
+                        </extraDirectories>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
-
 </project>

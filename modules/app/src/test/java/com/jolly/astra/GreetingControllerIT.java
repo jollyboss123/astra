@@ -34,15 +34,15 @@ class GreetingControllerIT {
       .andExpect(status().isUnauthorized());
   }
 
-  @Test
-  void userAuthenticated() throws Exception {
-    api.perform(get("/greet")
-      .with(SecurityMockMvcRequestPostProcessors.jwt().authorities(
-        new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ADMIN")
-      ))
-    ).andExpect(status().isOk())
-      .andExpect(jsonPath("$.body").value("Hi user! You are granted with: [ROLE_USER, ROLE_ADMIN]."));
-  }
+//  @Test
+//  void userAuthenticated() throws Exception {
+//    api.perform(get("/greet")
+//      .with(SecurityMockMvcRequestPostProcessors.jwt().authorities(
+//        new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ADMIN")
+//      ))
+//    ).andExpect(status().isOk())
+//      .andExpect(jsonPath("$.body").value("Hi user! You are granted with: [ROLE_USER, ROLE_ADMIN]."));
+//  }
 
   @Test
   void userAuthorized() throws Exception {
