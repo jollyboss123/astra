@@ -403,9 +403,9 @@
                 <profile.test>testdev</profile.test>
             </properties>
             <modules>
-                <module>modules/app</module>
                 <module>modules/heimdall</module>
                 <module>modules/heimdall-test</module>
+                <module>modules/app</module>
             </modules>
         </profile>
         <profile>

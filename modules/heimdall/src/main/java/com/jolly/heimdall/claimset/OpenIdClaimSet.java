@@ -15,7 +15,12 @@ import java.util.Map;
 public class OpenIdClaimSet extends UnmodifiableClaimSet implements IdTokenClaimAccessor, Principal {
   @Serial
   private static final long serialVersionUID = 4908273025927451191L;
-    private final String usernameClaim;
+
+  /**
+   * JSON path for the claim to use as "name" source
+   */
+  private final String usernameClaim;
+
   public OpenIdClaimSet(Map<String, Object> claims, String usernameClaim) {
     super(claims);
     this.usernameClaim = usernameClaim;

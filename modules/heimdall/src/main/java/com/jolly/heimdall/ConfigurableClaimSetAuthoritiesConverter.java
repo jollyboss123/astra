@@ -15,6 +15,16 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 /**
+ * Portable converter to extract Spring-security authorities from OAuth 2.0 claims.
+ * <p>
+ *   It is designed to work with {@link HeimdallOidcProperties} which enables to configure:
+ * </p>
+ * <ul>
+ *   <li>source claims (which claims to pick authorities from)</li>
+ *   <li>for each claim: prefix (should be anything like "ROLE_" or "SCOPE_" pre-pended to authorities)</li>
+ *   <li>for each claim: case transformation (process defined casing for authorities)</li>
+ * </ul>
+ *
  * @author jolly
  */
 public class ConfigurableClaimSetAuthoritiesConverter implements ClaimSetAuthoritiesConverter{

@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
+ * Collection of claims that are key-value pairs.
+ *
  * @author jolly
  */
 public interface ClaimSet extends Map<String, Object>, Serializable {

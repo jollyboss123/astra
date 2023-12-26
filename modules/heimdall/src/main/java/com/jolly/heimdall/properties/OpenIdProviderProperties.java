@@ -11,11 +11,27 @@ import java.util.List;
  * @author jolly
  */
 public class OpenIdProviderProperties {
+  /**
+   * Must be exactly the same as in access tokens. In case of doubt, open one of your access tokens with a tool like
+   * <a href="https://jwt.io">https://jwt.io</a>.
+   */
   private URI iss;
+  /**
+   * Can be omitted if OpenID configuration can be retrieved from ${iss}/.well-known/openid-configuration.
+   */
   private URI jwkSetUri;
+  /**
+   * Can be omitted. Will insert an audience validator if not null or empty.
+   */
   private String aud;
+  /**
+   * Authorities mapping configuration, per claim.
+   */
   @NestedConfigurationProperty
   private final List<SimpleAuthoritiesMappingProperties> authorities = new ArrayList<>();
+  /**
+   * JSON path for the claim to use as "name" source.
+   */
   private String usernameClaim = StandardClaimNames.SUB;
 
   public URI getIss() {

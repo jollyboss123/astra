@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Allows to work around the JDK limitations of e.g. {@link java.util.Collections} {@code UnmodifiableMap} is private and
+ * cannot be extended. This class makes it possible to extend a {@link Map} delegating to an unmodifiable one.
+ *
  * @author jolly
  */
 public class DelegatingMap<K, V> implements Map<K, V> {
