@@ -16,7 +16,6 @@
         <dependency>
             <groupId>com.jolly</groupId>
             <artifactId>heimdall</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -111,6 +110,10 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jolly</groupId>
+            <artifactId>heimdall-test</artifactId>
         </dependency>
     </dependencies>
 

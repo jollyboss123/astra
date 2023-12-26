@@ -1,4 +1,4 @@
-package com.jolly.astra.config;
+package com.jolly.heimdalltest;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.security.core.Authentication;
@@ -8,12 +8,7 @@ import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithSecurityContext;
 import org.springframework.security.test.context.support.WithSecurityContextFactory;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 import java.security.Principal;
 import java.util.stream.Stream;
 

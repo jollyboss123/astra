@@ -37,6 +37,7 @@
         <argLine>-Djava.security.egd=file:/dev/./urandom -Xmx1G</argLine>
         <spring-boot.version>3.2.1</spring-boot.version>
         <spring-cloud.version>2023.0.0</spring-cloud.version>
+        <heimdall.version>0.0.1-SNAPSHOT</heimdall.version>
 
         <checkstyle.version>10.12.5</checkstyle.version>
         <git-commit-id-maven-plugin.version>7.0.0</git-commit-id-maven-plugin.version>
@@ -76,6 +77,17 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jolly</groupId>
+                <artifactId>heimdall</artifactId>
+                <version>${heimdall.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jolly</groupId>
+                <artifactId>heimdall-test</artifactId>
+                <version>${heimdall.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -457,6 +469,7 @@
             <modules>
                 <module>modules/app</module>
                 <module>modules/heimdall</module>
+                <module>modules/heimdall-test</module>
             </modules>
         </profile>
         <profile>
