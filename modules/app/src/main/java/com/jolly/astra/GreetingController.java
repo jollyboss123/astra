@@ -10,10 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GreetingController {
 
-//	@GetMapping("/greet")
-//	public MessageDto getGreeting(Authentication auth) {
-//		return new MessageDto("Hi %s! You are granted with: %s.".formatted(auth.getName(), auth.getAuthorities()));
-//	}
   @GetMapping("/greet")
   @PreAuthorize("isAuthenticated()")
   public String greet(OAuthentication<OpenIdClaimSet> auth) {
@@ -21,7 +17,6 @@ public class GreetingController {
   }
 
 	@GetMapping("/restricted")
-//	@PreAuthorize("hasAnyAuthority(T(com.jolly.astra.security.AuthoritiesConstants).ADMIN)")
   @PreAuthorize("hasRole(T(com.jolly.astra.security.AuthoritiesConstants).ADMIN)")
 	public MessageDto getRestricted() {
 		return new MessageDto("You are an admin!");

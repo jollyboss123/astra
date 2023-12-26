@@ -141,7 +141,7 @@ public class HeimdallOidcProperties {
   }
 
   public OpenIdProviderProperties getOpProperties(String iss) throws MissingConfigurationException {
-    for (final var op : ops) {
+    for (final var op : getOps()) {
       String opIss = null;
       if (op.getIss() != null) {
         opIss = op.getIss().toString();
@@ -156,8 +156,8 @@ public class HeimdallOidcProperties {
   }
 
   public OpenIdProviderProperties getOpProperties(Object iss) throws MissingConfigurationException {
-    if (iss == null && ops.size() == 1) {
-      return ops.get(0);
+    if (iss == null && getOps().size() == 1) {
+      return getOps().get(0);
     }
 
     String issStr = null;

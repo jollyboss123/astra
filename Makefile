@@ -1,14 +1,14 @@
 .PHONY: app
 app:
-	docker-compose -f modules/norns/src/main/docker/app.yml up -d
+	docker-compose -f modules/app/src/main/docker/app.yml up -d
 
 .PHONY: postgres
 postgres:
-	docker-compose -f modules/norns/src/main/docker/postgresql.yml up -d
+	docker-compose -f modules/app/src/main/docker/postgresql.yml up -d
 
 .PHONY: keycloak
 keycloak:
-	docker-compose -f modules/norns/src/main/docker/keycloak.yml up -d
+	docker-compose -f modules/app/src/main/docker/keycloak.yml up -d
 
 .PHONY: jib
 jib:
