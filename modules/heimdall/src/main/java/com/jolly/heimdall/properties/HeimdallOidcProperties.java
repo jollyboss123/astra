@@ -188,9 +188,9 @@ public class HeimdallOidcProperties {
   /**
    * @param iss the issuer URI string
    * @return configuration properties associated with the provided issuer URI
-   * @throws MissingConfigurationException if configuration properties do not have an entry of the exact issuer
+   * @throws MisconfigurationException if configuration properties do not have an entry of the exact issuer
    */
-  public OpenIdProviderProperties getOpProperties(String iss) throws MissingConfigurationException {
+  public OpenIdProviderProperties getOpProperties(String iss) throws MisconfigurationException {
     for (final var op : getOps()) {
       String opIss = null;
       if (op.getIss() != null) {
@@ -202,15 +202,15 @@ public class HeimdallOidcProperties {
       }
     }
 
-    throw new MissingConfigurationException(iss);
+    throw new MisconfigurationException(iss);
   }
 
   /**
    * @param iss the issuer URL
    * @return configuration properties associated with the provided issuer URI
-   * @throws MissingConfigurationException if configuration properties do not have an entry of the exact issuer
+   * @throws MisconfigurationException if configuration properties do not have an entry of the exact issuer
    */
-  public OpenIdProviderProperties getOpProperties(Object iss) throws MissingConfigurationException {
+  public OpenIdProviderProperties getOpProperties(Object iss) throws MisconfigurationException {
     if (iss == null && getOps().size() == 1) {
       return getOps().get(0);
     }

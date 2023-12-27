@@ -3,12 +3,14 @@ package com.jolly.astra.config;
 import ch.qos.logback.classic.LoggerContext;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jolly.astra.logging.UserIdLoggingFilter;
 import com.jolly.astra.logging.LoggingUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
@@ -47,5 +49,10 @@ public class LoggingConfiguration {
     if (loggingProperties.isUseJsonFormat() || logstashProperties.isEnabled()) {
       LoggingUtils.addContextListener(context, customFields, loggingProperties);
     }
+  }
+
+  @Bean
+  public UserIdLoggingFilter userIdLoggingFilter() {
+    return new UserIdLoggingFilter();
   }
 }
